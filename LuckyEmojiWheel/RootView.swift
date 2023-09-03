@@ -10,10 +10,10 @@ import SnapKit
 
 class RootView : UIView {
     
-  var circles: [UILabel] = []
+  var emojies: [UILabel] = []
   
   struct LayoutConstants {
-      static let circleSize: CGFloat = 20
+      static let emojiSize: CGFloat = 48
   }
 
   //MARK: - Views
@@ -22,7 +22,7 @@ class RootView : UIView {
       stack.translatesAutoresizingMaskIntoConstraints = false
       stack.axis = .horizontal
       stack.distribution = .equalSpacing
-      stack.spacing = LayoutConstants.circleSize
+      stack.spacing = LayoutConstants.emojiSize
       return stack
   }()
   
@@ -42,15 +42,26 @@ class RootView : UIView {
     }
     
   
+  override func layoutSubviews() {
+      super.layoutSubviews()
+      
+      stackView.snp.remakeConstraints { make in
+          make.width.equalTo(self.snp.width).multipliedBy(0.7)
+          make.height.equalTo(LayoutConstants.emojiSize)
+        make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(self.bounds.height * 0.3)
+          make.centerX.equalTo(self)
+      }
+    }
+  
   //MARK: - Private methods
   private func createCircles(count: Int) {
     for i in 0..<count {
-      let circle = createCircle()
-      circle.accessibilityIdentifier = "circle\(i)"
-      circles.append(circle)
-      stackView.addArrangedSubview(circle)
-      circle.snp.makeConstraints { make in
-        make.width.height.equalTo(LayoutConstants.circleSize)
+      let emoji = createCircle()
+      emoji.accessibilityIdentifier = "circle\(i)"
+      emojies.append(emoji)
+      stackView.addArrangedSubview(emoji)
+      emoji.snp.makeConstraints { make in
+        make.width.height.equalTo(LayoutConstants.emojiSize)
       }
     }
   }
@@ -58,20 +69,13 @@ class RootView : UIView {
   private func createCircle() -> UILabel {
     let label = UILabel()
     label.text = "🌵"
-    label.font = UIFont.systemFont(ofSize: 18)
+    label.font = UIFont.systemFont(ofSize: 43)
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }
   
   private func setupLayout() {
     addSubview(stackView)
-    
-    stackView.snp.makeConstraints { make in
-      make.width.equalTo(240)
-      make.height.equalTo(LayoutConstants.circleSize)
-      make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(100)
-      make.centerX.equalTo(self)
-    }
   }
 }
 
