@@ -20,6 +20,7 @@ class ViewController: UIViewController {
   
   // MARK: - Properties
   var rootView = RootView()
+  var viewModel: EmojiViewModel!
   var timer: AnyCancellable?
   var cancellables = Set<AnyCancellable>()
   
@@ -40,7 +41,7 @@ class ViewController: UIViewController {
   // MARK: - Objc Methods
   @objc func updateEmoji() {
     for emojiLabel in rootView.emojies {
-      emojiLabel.text = rootView.emojiArray.randomElement() ?? Constants.defaultEmoji
+      emojiLabel.text = viewModel.randomEmoji()
     }
   }
   

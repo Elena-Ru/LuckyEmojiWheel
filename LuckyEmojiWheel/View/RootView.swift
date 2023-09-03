@@ -29,7 +29,7 @@ class RootView : UIView {
   
   let stopButton: UIButton = {
       let btn = UIButton()
-      btn.setTitle("STOP", for: .normal)
+      btn.setTitle("START", for: .normal)
       btn.setTitleColor(.appText, for: .normal)
       btn.backgroundColor = .appAccent
       btn.layer.cornerRadius = 10
@@ -88,7 +88,7 @@ class RootView : UIView {
   
   private func createCircle() -> UILabel {
     let label = UILabel()
-    label.text = emojiArray.randomElement() ?? "🍄" 
+    label.text = emojiArray.randomElement() ?? "🍄"
     label.font = UIFont.systemFont(ofSize: 43)
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
