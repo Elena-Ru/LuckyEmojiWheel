@@ -33,49 +33,42 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .appBackground
     rootView.stopButton.addTarget(self, action: #selector(handleStopButtonTap), for: .touchUpInside)
+    setupBindings()
   }
   
   deinit {
     cancellables.forEach { $0.cancel() }
   }
-  // MARK: - Objc Methods
-  @objc func updateEmoji() {
-    for emojiLabel in rootView.emojies {
-      emojiLabel.text = viewModel.randomEmoji()
-    }
-  }
   
   @objc func handleStopButtonTap() {
-    if timer == nil {
-      startSpinning()
-    } else {
-      stopSpinning()
-    }
+    viewModel.toggleSpinning()
   }
   
   // MARK: - Private Methods
-  private func startSpinning() {
-    timer = Timer.publish(every: 0.1, on: .main, in: .common)
-      .autoconnect()
-      .sink(receiveValue: { [weak self] _ in
-        self?.updateEmoji()
-      })
+  private func setupBindings() {
+    viewModel.$currentEmojis
+      .sink { [weak self] emojies in
+        guard let self = self else { return }
+        for (index, emojiLabel) in self.rootView.emojies.enumerated() {
+          if index < emojies.count {
+            emojiLabel.text = emojies[index]
+          }
+        }
+      }
+      .store(in: &cancellables)
     
-    rootView.stopButton.setTitle(Constants.stopTitle, for: .normal)
-  }
-  
-  private func stopSpinning() {
-    timer?.cancel()
-    timer = nil
-    rootView.stopButton.setTitle(Constants.startTitle, for: .normal)
-    
-    let matchedEmojis = Set(rootView.emojies.map { $0.text })
-    
-    if matchedEmojis.count == 1 {
-      showAlert(title: "Поздравляем!", message: "Вы выиграли!")
-    } else if matchedEmojis.count == 2 {
-      showAlert(title: "Почти!", message: "Два эмодзи совпали!")
-    }
+    viewModel.$isSpinning
+      .sink { [weak self] spinning in
+        if spinning {
+          self?.rootView.stopButton.setTitle("STOP", for: .normal)
+        } else {
+          self?.rootView.stopButton.setTitle("START", for: .normal)
+          if let result = self?.viewModel.gameResult() {
+            self?.showAlert(title: result.title, message: result.message)
+          }
+        }
+      }
+      .store(in: &cancellables)
   }
   
   private func showAlert(title: String, message: String) {

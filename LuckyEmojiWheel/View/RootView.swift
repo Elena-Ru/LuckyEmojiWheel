@@ -31,6 +31,7 @@ class RootView : UIView {
       let btn = UIButton()
       btn.setTitle("START", for: .normal)
       btn.setTitleColor(.appText, for: .normal)
+      btn.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
       btn.backgroundColor = .appAccent
       btn.layer.cornerRadius = 10
       btn.clipsToBounds = true

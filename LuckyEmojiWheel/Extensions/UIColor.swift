@@ -8,8 +8,7 @@
 import UIKit
 
 extension UIColor {
-    static let appBackground = UIColor(red: 252/255, green: 228/255, blue: 236/255, alpha: 1)
-    static let appAccent = UIColor(red: 161/255, green: 222/255, blue: 147/255, alpha: 1)
-    static let appText = UIColor(red: 107/255, green: 93/255, blue: 107/255, alpha: 1)
+  static let appBackground = UIColor(red: 28/255, green: 20/255, blue: 45/255, alpha: 1)
+  static let appAccent = UIColor(red: 160/255, green: 70/255, blue: 255/255, alpha: 1)
+  static let appText = UIColor(red: 210/255, green: 200/255, blue: 220/255, alpha: 1)
 }
-
