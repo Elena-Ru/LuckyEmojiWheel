@@ -26,6 +26,18 @@ class RootView : UIView {
       return stack
   }()
   
+  let stopButton: UIButton = {
+      let btn = UIButton()
+      btn.setTitle("STOP", for: .normal)
+      btn.setTitleColor(.appText, for: .normal)
+      btn.backgroundColor = .appAccent
+      btn.layer.cornerRadius = 10
+      btn.clipsToBounds = true 
+      btn.translatesAutoresizingMaskIntoConstraints = false
+      return btn
+  }()
+
+  
   //MARK: - Inits
      init() {
         super.init(frame: CGRect())
@@ -48,10 +60,17 @@ class RootView : UIView {
       stackView.snp.remakeConstraints { make in
           make.width.equalTo(self.snp.width).multipliedBy(0.7)
           make.height.equalTo(LayoutConstants.emojiSize)
-        make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(self.bounds.height * 0.3)
+          make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(self.bounds.height * 0.3)
           make.centerX.equalTo(self)
       }
-    }
+    
+      stopButton.snp.remakeConstraints { make in
+          make.width.equalTo(self.snp.width).multipliedBy(0.7)
+          make.height.equalTo(LayoutConstants.emojiSize)
+          make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-40)
+          make.centerX.equalTo(self)
+      }
+  }
   
   //MARK: - Private methods
   private func createCircles(count: Int) {
@@ -76,6 +95,7 @@ class RootView : UIView {
   
   private func setupLayout() {
     addSubview(stackView)
+    addSubview(stopButton)
   }
 }
 
