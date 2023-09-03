@@ -11,6 +11,7 @@ import SnapKit
 class RootView : UIView {
     
   var emojies: [UILabel] = []
+  let emojiArray: [String] = ["🌵", "🍀", "🍓", "🍌", "🍇", "🍉", "🍋"]
   
   struct LayoutConstants {
       static let emojiSize: CGFloat = 48
@@ -32,7 +33,7 @@ class RootView : UIView {
       btn.setTitleColor(.appText, for: .normal)
       btn.backgroundColor = .appAccent
       btn.layer.cornerRadius = 10
-      btn.clipsToBounds = true 
+      btn.clipsToBounds = true
       btn.translatesAutoresizingMaskIntoConstraints = false
       return btn
   }()
@@ -87,7 +88,7 @@ class RootView : UIView {
   
   private func createCircle() -> UILabel {
     let label = UILabel()
-    label.text = "🌵"
+    label.text = emojiArray.randomElement() ?? "🍄" 
     label.font = UIFont.systemFont(ofSize: 43)
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
