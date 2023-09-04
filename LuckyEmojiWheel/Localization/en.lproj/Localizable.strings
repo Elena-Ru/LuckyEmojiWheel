@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  LuckyEmojiWheel
+
+  Created by Елена Русских on 2023-09-04.
+  
+*/
+"start" = "START";
+"stop" = "STOP";
+"ok" = "OK";
+"alert_winning_title" = "Congratulations!";
+"alert_winning_message" = "You win!";
+"alert_halfWining_title" = "Almost!";
+"alert_halfWining_message" = "Two emoji matched!";
