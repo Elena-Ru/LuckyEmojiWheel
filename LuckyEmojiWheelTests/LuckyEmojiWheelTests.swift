@@ -62,5 +62,34 @@ final class EmojiViewModelTests: XCTestCase {
         // Then
         XCTAssertFalse(sut.isSpinning, "isSpinning should be false after toggling twice")
     }
+  
+    func testGameResult_AllEmojisSame_ReturnsWinner() {
+        // Given
+        sut.currentEmojis = ["🍄", "🍄", "🍄"]
+        // When
+        let result = sut.gameResult()
+        // Then
+        XCTAssertEqual(result?.title, Texts.AlertWinner.title, "Should return winner title for all same emojis")
+        XCTAssertEqual(result?.message, Texts.AlertWinner.message, "Should return winner message for all same emojis")
+    }
+  
+    func testGameResult_TwoEmojisSame_ReturnsHalfWinner() {
+        // Given
+        sut.currentEmojis = ["🍄", "😀", "😀"]
+        // When
+        let result = sut.gameResult()
+        // Then
+        XCTAssertEqual(result?.title, Texts.AlertHalfWinner.title, "Should return half winner title for two same     emojis")
+        XCTAssertEqual(result?.message, Texts.AlertHalfWinner.message, "Should return half winner message for two   same   emojis")
+    }
+  
+    func testGameResult_AllEmojisDifferent_ReturnsNil() {
+        // Given
+        sut.currentEmojis = ["🍄", "😀", "🙂"]
+        // When
+        let result = sut.gameResult()
+        // Then
+        XCTAssertNil(result, "Should return nil for all different emojis")
+    }
 }
 
