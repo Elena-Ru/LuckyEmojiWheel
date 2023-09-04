@@ -8,5 +8,5 @@
 import Foundation
 
 struct EmojiModel {
-    let emojiArray: [String] = ["🦁", "🍀", "🍓", "🍌", "🌹", "🌼", "🦄"]
+    var emojiArray: [String] = ["🦁", "🍀", "🍓", "🍌", "🌹", "🌼", "🦄"]
 }

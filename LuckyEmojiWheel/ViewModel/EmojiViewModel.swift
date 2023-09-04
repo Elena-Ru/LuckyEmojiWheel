@@ -14,6 +14,7 @@ class EmojiViewModel {
   private var model: EmojiModel
   private var cancellables: Set<AnyCancellable> = []
   private var sharedTimer: AnyPublisher<Date, Never>!
+  private var timerService: TimerProtocol
   @Published var isSpinning: Bool = false
   @Published var currentEmojis: [String] = []
   
@@ -21,8 +22,9 @@ class EmojiViewModel {
     return model.emojiArray
   }
   // MARK: - Init
-  init(model: EmojiModel) {
-    self.model = model
+  init(model: EmojiModel, timerService: TimerProtocol = TimerService()) {
+      self.model = model
+      self.timerService = timerService
   }
   
   // MARK: - Public Methods
@@ -33,6 +35,12 @@ class EmojiViewModel {
     } else {
       cleanup()
     }
+  }
+  
+  func stopTimer() {
+      sharedTimer = nil
+      cancellables.forEach { $0.cancel() }
+      cancellables.removeAll()
   }
   
   func gameResult() -> (title: String, message: String)? {
@@ -47,8 +55,7 @@ class EmojiViewModel {
   
   // MARK: - Private Methods
   private func startSpinning() {
-    sharedTimer = Timer.publish(every: 0.1, on: .main, in: .common)
-      .autoconnect()
+    sharedTimer = timerService.publish(every: 0.1, on: .main, in: .common)
       .share()
       .eraseToAnyPublisher()
     
@@ -72,6 +79,7 @@ class EmojiViewModel {
   }
   
   private func cleanup() {
-    cancellables.forEach { $0.cancel() }
+      cancellables.forEach { $0.cancel() }
+      sharedTimer = nil
   }
 }
