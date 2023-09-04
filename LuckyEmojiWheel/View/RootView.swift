@@ -29,7 +29,7 @@ class RootView : UIView {
   
   let stopButton: UIButton = {
       let btn = UIButton()
-      btn.setTitle("START", for: .normal)
+      btn.setTitle(Texts.ViewController.buttonStart, for: .normal)
       btn.setTitleColor(.appText, for: .normal)
       btn.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
       btn.backgroundColor = .appAccent
@@ -78,7 +78,7 @@ class RootView : UIView {
   private func createCircles(count: Int) {
     for i in 0..<count {
       let emoji = createCircle()
-      emoji.accessibilityIdentifier = "circle\(i)"
+      emoji.accessibilityIdentifier = "emoji\(i)"
       emojies.append(emoji)
       stackView.addArrangedSubview(emoji)
       emoji.snp.makeConstraints { make in

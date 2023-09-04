@@ -38,9 +38,9 @@ class EmojiViewModel {
   func gameResult() -> (title: String, message: String)? {
     let matchedEmojis = Set(currentEmojis)
     if matchedEmojis.count == 1 {
-      return (title: "Поздравляем!", message: "Вы выиграли!")
+      return (title: Texts.AlertWinner.title, message: Texts.AlertWinner.message)
     } else if matchedEmojis.count == 2 {
-      return (title: "Почти!", message: "Два эмодзи совпали!")
+      return (title: Texts.AlertHalfWinner.title, message: Texts.AlertHalfWinner.message)
     }
     return nil
   }

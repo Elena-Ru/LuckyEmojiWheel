@@ -13,8 +13,8 @@ class ViewController: UIViewController {
   
   // MARK: - Constants
   private enum Constants {
-    static let startTitle = "START"
-    static let stopTitle = "STOP"
+    static let startTitle = Texts.ViewController.buttonStart
+    static let stopTitle = Texts.ViewController.buttonStop
     static let defaultEmoji = "🍄"
   }
   
@@ -60,9 +60,9 @@ class ViewController: UIViewController {
     viewModel.$isSpinning
       .sink { [weak self] spinning in
         if spinning {
-          self?.rootView.stopButton.setTitle("STOP", for: .normal)
+          self?.rootView.stopButton.setTitle(Constants.stopTitle, for: .normal)
         } else {
-          self?.rootView.stopButton.setTitle("START", for: .normal)
+          self?.rootView.stopButton.setTitle(Constants.startTitle, for: .normal)
           if let result = self?.viewModel.gameResult() {
             self?.showAlert(title: result.title, message: result.message)
           }
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
   
   private func showAlert(title: String, message: String) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    alert.addAction(UIAlertAction(title: Texts.Common.ok, style: .default, handler: nil))
     present(alert, animated: true, completion: nil)
   }
   
